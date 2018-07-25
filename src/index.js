@@ -1,81 +1,135 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import "./index.css";
 
 let i = 0;
-let sum = 0;
-let Cart = [];
-const Wp = () => (
+let TotalPrice = 0;
+
+//Array of products
+const products = [
+  { id: 1, name: "Pen", price: 5 },
+  { id: 2, name: "Pencil", price: 4 },
+  { id: 3, name: "Book", price: 30 },
+  { id: 4, name: "Ruler", price: 10 }
+];
+
+//array for product in carts
+const cart = [
+  { id: 1, name: "Pen", total: 0, itemtotalprice: 0 },
+  { id: 2, name: "Pencil", total: 0, itemtotalprice: 0 },
+  { id: 3, name: "Book", total: 0, itemtotalprice: 0 },
+  { id: 4, name: "Ruler", total: 0, itemtotalprice: 0 }
+];
+
+//stateless component for printing products list
+const App = () => (
   <React.Fragment>
     <h1 align="center">Shopping Cart</h1>
     <button class="count">{i}</button>
-    <button onClick={Cartprint} class="cartbutton">cart</button>
-    <ul>
-      {
-        products.map(product => <Product {...product} />)
-      }
-    </ul>
+    <button onClick={Cartprint} class="cartButton">
+      cart
+    </button>
+    <ul>{products.map(product => <Product {...product} />)}</ul>
   </React.Fragment>
 );
 
 const Product = ({ id, name, price, total, tprice }) => (
   <li>
-    <div class="product-list" align="center">
-      <br />{name}
-      <br />${price}
+    <div class="productList" align="center">
       <br />
-      <button onClick={Message.bind(this,{id},{price})}>add to cart</button>
-      <hr />
+      <div class="divAlign">
+       {id}
+      </div>
+     <div class="divAlign">
+      {name}
+     </div>
+      <div class="divAlign">
+      Rs.{price}
+      </div>
+      <div class="divAlign">
+      <button onClick={Addtocart.bind(this, { id }, { price })} class="addToart">
+        add to cart
+      </button>
+       </div>
+
     </div>
+      <hr />
   </li>
 );
 
-
-const Message = ( { id },{ price }) => {
-  //Cart.push(p);
-  console.log("entered",products);
-  products[id-1].tprice  += price;
-  products[id-1].total  += 1;
-  const rootElement = document.getElementById("root");
-  i++;
-  sum = sum + price;
-  console.log(products[id-1].tprice );
-  console.log(products[id-1].total);
-  ReactDOM.render(<Wp />, rootElement);
-}
-
-const Cartprint = wp1 =>
-{
-  const rootElement = document.getElementById("root");
-  ReactDOM.render(<Wp1 />, rootElement);
-}
-
-const Wp1 = () => {
-  console.log("entered wp");
-  return(
-    <div>
-    <h1 align="center">CART PAGE</h1>
-
-    <table class="cart">
-    <tr class="cart1"><td>Product name</td><td>Product count</td><td>total price</td></tr>
-    <tr><td><hr/></td><td><hr/></td><td><hr/></td></tr>
-    {
-        products.map(pro => <tr><td>{pro.name}</td><td>{pro.total}$</td><td>{pro.tprice}</td></tr>)
-    }
-    </table>
-    <p class="totalprice">totalprice={sum}/-</p>
-  </div>);
+//stateless component for cart list printing
+const Cart = ({ id, name, total, itemtotalprice }) => {
+  if (total === 0) {
+    return null;
+  }
+  return (
+    <tr>
+      <td id="coloumn">{name}</td>
+      <td id="coloumn">{total}</td>
+      <td id="coloumn">{itemtotalprice}/-</td>
+    </tr>
+  );
 };
 
-const products = [
-  { id: 1, name: "pen", price: 5, total: 0, tprice: 0 },
-  { id: 2, name: "pencil", price: 4, total: 0, tprice: 0 },
-  { id: 3, name: "book", price: 30, total: 0, tprice: 0 },
-  { id: 4, name: "ruler", price: 10, total: 0, tprice: 0 },
-]
+//function for add to cart button
+const Addtocart = ({ id }, { price }) => {
+  cart[id - 1].itemtotalprice += price;
+  cart[id - 1].total += 1;
+  console.log(cart);
+  const rootElement = document.getElementById("root");
+  i++;
+  TotalPrice = TotalPrice + price;
+  ReactDOM.render(<App />, rootElement);
+};
 
+//function for cart button
+const Cartprint = any => {
+  if (i > 0) {
+    const rootElement = document.getElementById("root");
+    ReactDOM.render(<PrintTable />, rootElement);
+  }
+  else {
+    const rootElement = document.getElementById("root");
+    ReactDOM.render(<Noitem />, rootElement);
+  }
+};
 
+//stateless component to print cart list
+const PrintTable = () => (
+  <div>
+    <h1 align="center">CART PAGE</h1>
+    <table class="cartItem" align="center">
+      <tr >
+        <td>Product name</td>
+        <td>Product count</td>
+        <td>total price</td>
+      </tr>
+      <tr>
+        <td>
+          <hr />
+        </td>
+        <td>
+          <hr />
+        </td>
+        <td>
+          <hr />
+        </td>
+      </tr>
+      {cart.map(pro => <Cart {...pro} />)}
+    </table>
+    <p class="totalPrice">totalprice={TotalPrice}/-</p>
+  </div>
+);
+
+//stateless component for print no item
+const Noitem = () => {
+  return (
+    <div>
+      <h1 align="center">CART PAGE</h1>
+      <p class="noItem">No item added</p>
+    </div>
+  );
+};
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Wp />, rootElement);
+ReactDOM.render(<App />, rootElement);
