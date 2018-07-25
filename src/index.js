@@ -25,7 +25,7 @@ const cart = [
 const App = () => (
   <React.Fragment>
     <h1 align="center">Shopping Cart</h1>
-    <button class="count">{i}</button>
+    Count:<button class="count">{i}</button>
     <button onClick={Cartprint} class="cartButton">
       cart
     </button>
@@ -36,13 +36,13 @@ const App = () => (
 const Product = ({ id, name, price, total, tprice }) => (
   <li>
     <div class="productList" align="center">
-      <br />
-      <div class="divAlign">
-       {id}
+       <br />
+       <div class="divAlign">
+          {id}
+       </div>
+       <div class="divAlign">
+          {name}
       </div>
-     <div class="divAlign">
-      {name}
-     </div>
       <div class="divAlign">
       Rs.{price}
       </div>
@@ -51,7 +51,6 @@ const Product = ({ id, name, price, total, tprice }) => (
         add to cart
       </button>
        </div>
-
     </div>
       <hr />
   </li>

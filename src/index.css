@@ -22,10 +22,6 @@ button.cartButton{
   float: right;
 }
 
-p.totalprice
-{
-  margin-left:79%;
-}
 
 
 
@@ -56,13 +52,14 @@ span{
     border: 1px solid red;
 }
 
-li.totalPrice{
+.totalPrice{
   margin-left:300px;
+  margin-left:79%;
 }
 
 
 button{
-  background-color:lightblue;
+  background-color:yellow;
 	border:none;
 	width:50x;
 	height:30px;
@@ -76,7 +73,6 @@ button{
     text-align: center;
     color: white;
     border-radius: 100%;
-    float:right;
 }
 
 table.cartItem{
